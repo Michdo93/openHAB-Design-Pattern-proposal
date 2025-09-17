@@ -254,4 +254,48 @@ client.loop_forever()
 4. **Fallbacks:** Wenn Sensoren ausfallen, Fusion sollte robust bleiben (z. B. Median statt Mittelwert).
 5. **Dokumentation:** Rohsensoren, Fusion-Algorithmus und Proxy-Item klar benennen, z. B. `Temp_Sensor1` → `Temp_Fused`.
 
+# **Unterscheidung / Abgrenzung zu anderen sensorbezogenen Pattern**
+
+---
+
+## ** Sensor Fusion Proxy Pattern vs. Sensor Aggregation (15157)**
+
+| Merkmal                       | Sensor Fusion Proxy Pattern                                                                 | Sensor Aggregation Pattern                                                                       |
+| ----------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Ziel**                      | Mehrere Sensoren zu einem gefilterten, stabilen Wert fusionieren (z. B. Mittelwert, Kalman) | Mehrere Sensoren logisch zusammenfassen, z. B. `OR`, `AND` für Anwesenheit oder Schalterzustände |
+| **Art der Verarbeitung**      | Mathematische Filter, statistische Fusion, ggf. externe Algorithmen                         | Logische Kombination der Sensorzustände                                                          |
+| **Komplexität**               | Mittel bis hoch, abhängig von Filter/Algorithmus                                            | Niedrig                                                                                          |
+| **Handling von Unsicherheit** | Berücksichtigt Sensorunsicherheiten, Rauschen, Ausreißer                                    | Keine Unsicherheitsbehandlung, nur binär oder gruppenbasiert                                     |
+| **Beispiele**                 | Temperaturfusion mit Kalman, kombinierte Luftfeuchte- oder Helligkeitswerte                 | Bewegungsmelder: „Wenn irgendeiner meldet → Anwesenheit“                                         |
+
+**Fazit:**
+Mein Pattern erweitert das klassische Sensor Aggregation Pattern um **Filterung, Glättung und Unsicherheitsbehandlung**. Während Sensor Aggregation einfach aggregiert, geht Sensor Fusion einen Schritt weiter: „**Wie kann ich die Daten intelligent zusammenführen, nicht nur kombinieren?**“
+
+---
+
+## ** Sensor Fusion Proxy Pattern vs. Bayesian Sensor Aggregation (109627)**
+
+| Merkmal                       | Sensor Fusion Proxy Pattern                                           | Bayesian Sensor Aggregation                                                                |
+| ----------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Ziel**                      | Allgemeine Sensor Fusion: Stabilisierung, Glättung, kombinierte Werte | Probabilistische Bewertung von Sensoren, um Wahrscheinlichkeiten für Zustände zu berechnen |
+| **Art der Verarbeitung**      | Filterbasiert: Mittelwert, Median, Low-Pass, Kalman etc.              | Bayesianische Berechnungen, Gewichtung von Sensorwahrscheinlichkeiten                      |
+| **Komplexität**               | Mittel bis hoch (bei Kalman)                                          | Hoch (Bayessche Logik, Wahrscheinlichkeitstheorie)                                         |
+| **Handling von Unsicherheit** | Ja, über Filter/Statistik, aber nicht probabilistisch                 | Ja, probabilistisch; Sensorzuverlässigkeit explizit modelliert                             |
+| **Externe Verarbeitung**      | Optional (Python, Node-RED, MQTT)                                     | Optional, meistens Jython oder externe Berechnungen nötig                                  |
+| **Beispiele**                 | Gefilterte Temperatur oder Luftfeuchte                                | Anwesenheitserkennung mit Wahrscheinlichkeiten aus mehreren Sensoren                       |
+
+**Fazit:**
+Bayesian Sensor Aggregation ist **spezifischer**: Es geht um die **Wahrscheinlichkeit eines Zustands** basierend auf unsicheren Sensoren.
+Sensor Fusion Proxy Pattern ist **allgemeiner**: Ziel ist die **Glättung, Filterung und Zusammenführung von Messwerten**. Man könnte Bayesian Aggregation sogar als **eine spezielle Variante von Sensor Fusion** sehen.
+
+---
+
+### ** Zusammenfassung**
+
+* **Sensor Aggregation:** Einfache logische Kombination → keine Unsicherheitsbehandlung.
+* **Sensor Fusion Proxy Pattern (neu):** Mathematische Fusion/Filterung → stabilisierte Werte, Ausreißerbehandlung, Glättung.
+* **Bayesian Sensor Aggregation:** Probabilistische Fusion → bewertet Wahrscheinlichkeit von Zuständen, explizit für unsichere Sensoren.
+
+Also: **Mein Pattern ist ein flexibler „Allrounder“**, der einfache Mittelwerte, Kalman-Filter oder sogar Bayessche Logik aufnehmen kann. Es geht weniger um die Wahrscheinlichkeit eines Zustands und mehr um **verlässliche, fusionierte Messwerte**, die Automationen nutzen können.
+
 ---
