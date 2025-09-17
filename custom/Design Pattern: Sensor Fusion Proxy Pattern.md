@@ -258,7 +258,7 @@ client.loop_forever()
 
 ---
 
-## ** Sensor Fusion Proxy Pattern vs. Sensor Aggregation (15157)**
+## **Sensor Fusion Proxy Pattern vs. Sensor Aggregation**
 
 | Merkmal                       | Sensor Fusion Proxy Pattern                                                                 | Sensor Aggregation Pattern                                                                       |
 | ----------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -273,7 +273,7 @@ Mein Pattern erweitert das klassische Sensor Aggregation Pattern um **Filterung,
 
 ---
 
-## ** Sensor Fusion Proxy Pattern vs. Bayesian Sensor Aggregation (109627)**
+## **Sensor Fusion Proxy Pattern vs. Bayesian Sensor Aggregation**
 
 | Merkmal                       | Sensor Fusion Proxy Pattern                                           | Bayesian Sensor Aggregation                                                                |
 | ----------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
@@ -290,7 +290,7 @@ Sensor Fusion Proxy Pattern ist **allgemeiner**: Ziel ist die **Glättung, Filte
 
 ---
 
-### ** Zusammenfassung**
+### **Zusammenfassung**
 
 * **Sensor Aggregation:** Einfache logische Kombination → keine Unsicherheitsbehandlung.
 * **Sensor Fusion Proxy Pattern (neu):** Mathematische Fusion/Filterung → stabilisierte Werte, Ausreißerbehandlung, Glättung.
